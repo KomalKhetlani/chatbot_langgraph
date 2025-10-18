@@ -11,12 +11,11 @@ This is a simple chatbot application built using Streamlit for the frontend and 
 - Simple and extendable architecture
 
 # Project Structure
-.
-├── chatbot_backend.py   # Backend logic using LangGraph + OpenAI
-├── chatbot_frontend.py  # Streamlit frontend (main app)
-├── .env                 # Environment variables (API keys)
-├── requirements.txt     # Python dependencies
-└── README.md            # Project documentation
+- chatbot_backend.py   # Backend logic using LangGraph + OpenAI
+- chatbot_frontend.py  # Streamlit frontend (main app)
+- .env                 # Environment variables (API keys)
+- requirements.txt     # Python dependencies
+- README.md            # Project documentation
 
 # Requirements
 
