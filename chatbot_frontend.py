@@ -4,8 +4,9 @@ from langchain_core.messages import HumanMessage
 
 CONFIG = {'configurable': {'thread_id': 'thread-1'}}
 
-#If a regular python dictionary was used then teh content would have been lost with every enter press, hence session state is used.
-#We are initialising the session state when tehre is no message history
+# If a regular python dictionary was used then teh content would have been lost with every enter press, hence session state is used.
+# We are initialising the session state when tehre is no message history
+
 if 'message_history' not in st.session_state:
     st.session_state['message_history'] = []
 
@@ -24,9 +25,11 @@ if user_input:
     with st.chat_message("User"):
         st.text(user_input)
 
-    response = chatbot.invoke({'messages': [HumanMessage(content=user_input)]}, CONFIG)
-    ai_message = response['messages'][-1].content
-    # First add the message to message history
-    st.session_state['message_history'].append({'role': 'AI', 'content': ai_message})
+    # Message will be streamed to UI instead of just printed.
     with st.chat_message("AI"):
-        st.text(ai_message)
+        ai_message = st.write_stream(
+            message_chunk.content for message_chunk, metadata in chatbot.stream(
+                {'messages': [HumanMessage(content=user_input)]},
+                {'configurable': {'thread_id': 'thread-1'}}, stream_mode="messages")
+        )
+    st.session_state['message_history'].append({'role': 'AI', 'content': ai_message})
